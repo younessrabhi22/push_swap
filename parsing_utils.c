@@ -6,7 +6,7 @@
 /*   By: yrabhi <yrabhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 12:58:36 by yrabhi            #+#    #+#             */
-/*   Updated: 2025/12/25 23:06:17 by yrabhi           ###   ########.fr       */
+/*   Updated: 2025/12/27 22:32:57 by yrabhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,21 @@ void	ft_error(void)
 {
 		write(2, "Error\n", 6);
 		exit(1);
-}
-
-char	**ft_free(char **arr, int len)
+ }
+static void	ft_free(char **result, int index)
 {
 	int	i;
 
 	i = 0;
-	while (i < len)
+	while (i < index)
 	{
-		free(arr[i]);
+		free(result[i]);
 		i++;
 	}
-	free(arr);
-	return NULL;
+	free(result);
 }
-int	count_words(char *str)
+
+static int	count_words(char *str)
 {
 	int	i;
 	int	words;
@@ -48,67 +47,58 @@ int	count_words(char *str)
 	}
 	return words;
 }
-char	*fill_arr(char *str, int *i)
+static void	fill_arr(char *str, char **result, char delemiter, int *i, int res_index)
 {
-	char	*word;
-	int	len;
+	int	size;
+	int tmp;
 	int	j;
 
-	len = 0;
+	size = 0;
+	tmp = *i;
 	j = 0;
-	if (!str[*i])
-	return NULL;
-	while (str[*i + len] && str[*i + len] != ' ')
-		len++;
-	word = malloc(len + 1);
-	if (!word)
-		return NULL;
-	while (str[*i] && str[*i] != ' ')
-		word[j++] = str[(*i)++];
-
-	word[j] = '\0';
-	return (word);
+	while (str[*i] && (str[*i] != delemiter))
+	{
+		size++;
+		(*i)++;
 	}
-
-
-char	**ft_split(char  *s, char c)
+	*result = malloc(size + 1);
+	if (!*result)
+	{
+		ft_free(result, res_index);
+		return ;
+	}
+	while (tmp < (*i))
+	{
+		(*result)[j] = str[tmp];
+		j++;
+		tmp++;
+	}
+	(*result)[j] = '\0';
+}
+char	**ft_split(char  *str, char delemiter)
 {
+
 	char	**result;
 	int	words;
 	int	i;
-	int	j;
+	int	k;
 
 	i = 0;
-	j = 0;
-	if (!s)
+	k = 0;
+	words =  count_words(str);
+	if (!str)
 		return NULL;
-	result = malloc((count_words(s) + 1) * sizeof(char *));
+	result = malloc((words + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);
-	while (s[i])
+	while (k < words)
 	{
-		while (s[i] && s[i] == ' ')
+		while  (str[i] && (str[i] == delemiter))
 			i++;
-		result[j] = fill_arr(s, &i);
-		if (!result[j])
-		 return ft_free(result, j);
-		j++;
+		if (str[i])
+			fill_arr(str, &result[k], delemiter, &i, k);
+		k++;
 	}
-	result[j] = NULL;
+	result[k] = NULL;
 	return result;
-	}
-
-	int	main()
-	{
-
-		char **str = ft_split("    eeeeeeee ffffffffffff jjjjjjjj       ", ' ');
-
-		int i = 0;
-
-		while (str[i])
-		{
-			printf("%s\n", str[i]);
-			i++;
-		}
-
 	}

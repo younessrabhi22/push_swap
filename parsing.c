@@ -6,7 +6,7 @@
 /*   By: yrabhi <yrabhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 13:03:03 by yrabhi            #+#    #+#             */
-/*   Updated: 2025/12/25 13:03:05 by yrabhi           ###   ########.fr       */
+/*   Updated: 2025/12/27 22:59:59 by yrabhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,24 +87,27 @@ int	is_validate_input(t_list **stack, int argc, char **argv)
 {
 	int	i;
 	long	arg;
+	char	**splite_str;
+	int	j;
 
 	i = 1;
-	arg = 0;
-	if (argc < 2)
-		return (0);
 	while (i < argc)
 	{
-		if (!is_number(argv[i]))
-		return 0;
-
-		arg = ft_atoi(argv[i]);
-		if (arg < -2147483648 || arg > 2147483647)
-			return (0);
-		if (is_dupl(*stack, arg))
-			return (0);
-		node_to_lst(stack, new_node(arg));
+		splite_str = ft_split(argv[i], ' ');
+		j = 0;
+		while(splite_str[j])
+		{
+			if (!is_number(splite_str[j]))
+				return 0;
+			arg = ft_atoi(splite_str[j]);
+			if (arg < -2147483648 || arg > 2147483647)
+				return (0);
+			if (is_dupl(*stack, arg))
+				return (0);
+			node_to_lst(stack, new_node(arg));
+			j++;
+		}
 		i++;
 	}
-
 	return (1);
 }

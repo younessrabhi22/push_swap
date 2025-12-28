@@ -6,24 +6,22 @@
 #    By: yrabhi <yrabhi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/25 13:02:27 by yrabhi            #+#    #+#              #
-#    Updated: 2025/12/25 13:02:37 by yrabhi           ###   ########.fr        #
+#    Updated: 2025/12/28 14:44:00 by yrabhi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = push_swap.a
+NAME = push_swap
 CC = gcc
 CFLAGC = -Wextra -Werror -Wall
-AR = ar rsc
 RM = rm -f
 
-SRC = push_swap.c parsing.c utils.c
+SRC = parsing.c parsing_utils.c swap.c push.c rotate.c rev_rotate.c main.c
 OBJ = $(SRC:.c=.o)
-
 
 all :	$(NAME) push_swap.h
 
 $(NAME) : $(OBJ)
-		$(AR) $(NAME) $(OBJ)
+		$(CC) $(CFLAGC) $(OBJ) -o $(NAME)
 
 %.o : %.c
 		$(CC) $(CFLAGC) -c $<
