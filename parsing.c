@@ -6,7 +6,7 @@
 /*   By: yrabhi <yrabhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 13:03:03 by yrabhi            #+#    #+#             */
-/*   Updated: 2025/12/27 22:59:59 by yrabhi           ###   ########.fr       */
+/*   Updated: 2025/12/29 14:49:48 by yrabhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,16 @@ static int is_dupl(t_list *stack, int result)
 	}
 	return (0);
 }
+
 static int	is_number(char *str)
 {
 	int	i;
 
 	i = 0;
 	if (str[i] == '-' || str[i] == '+')
-	{
 		i++;
-	}
-		if (str[i] == '\0')
-		{
-			return (0);
-		}
+	if (str[i] == '\0')
+		return (0);
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
@@ -43,6 +40,7 @@ static int	is_number(char *str)
 	}
 	return 1;
 }
+
 static long	ft_atoi(char *str)
 {
 	long	i;
@@ -67,6 +65,7 @@ static long	ft_atoi(char *str)
 	}
 	return (result * sign);
 }
+
 void	node_to_lst(t_list **lst, t_list *node)
 {
 	t_list *head;
@@ -81,7 +80,7 @@ void	node_to_lst(t_list **lst, t_list *node)
 		 *lst = (*lst)->next;
 	(*lst)->next = node;
 	*lst = head;
-	}
+}
 
 int	is_validate_input(t_list **stack, int argc, char **argv)
 {
@@ -93,21 +92,21 @@ int	is_validate_input(t_list **stack, int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		splite_str = ft_split(argv[i], ' ');
+		splite_str = ft_split(argv[i++], ' ');
 		j = 0;
 		while(splite_str[j])
 		{
 			if (!is_number(splite_str[j]))
-				return 0;
+				return (free_split(splite_str), 0);
 			arg = ft_atoi(splite_str[j]);
 			if (arg < -2147483648 || arg > 2147483647)
-				return (0);
+				return (free_split(splite_str), 0);
 			if (is_dupl(*stack, arg))
-				return (0);
+				return (free_split(splite_str), 0);
 			node_to_lst(stack, new_node(arg));
 			j++;
 		}
-		i++;
+		free_split(splite_str);
 	}
 	return (1);
 }

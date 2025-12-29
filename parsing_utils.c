@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yrabhi <yrabhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 12:58:36 by yrabhi            #+#    #+#             */
-/*   Updated: 2025/12/27 22:32:57 by yrabhi           ###   ########.fr       */
+/*   Updated: 2025/12/29 14:50:01 by yrabhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ void	ft_error(void)
 		write(2, "Error\n", 6);
 		exit(1);
  }
-static void	ft_free(char **result, int index)
+
+void	ft_free(char **result, int index)
 {
 	int	i;
 
 	i = 0;
-	while (i < index)
+	while (i <= index)
 	{
 		free(result[i]);
 		i++;
@@ -47,6 +48,7 @@ static int	count_words(char *str)
 	}
 	return words;
 }
+
 static void	fill_arr(char *str, char **result, char delemiter, int *i, int res_index)
 {
 	int	size;
@@ -75,6 +77,7 @@ static void	fill_arr(char *str, char **result, char delemiter, int *i, int res_i
 	}
 	(*result)[j] = '\0';
 }
+
 char	**ft_split(char  *str, char delemiter)
 {
 

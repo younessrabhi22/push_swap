@@ -1,36 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   sort_small.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yrabhi <yrabhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/28 14:13:32 by yrabhi            #+#    #+#             */
-/*   Updated: 2025/12/29 14:49:31 by yrabhi           ###   ########.fr       */
+/*   Created: 2025/12/28 16:35:21 by yrabhi            #+#    #+#             */
+/*   Updated: 2025/12/28 17:21:23 by yrabhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	push(t_list **lst1, t_list **lst2)
+int	lst_size(t_list *lst)
 {
-	t_list	*head;
-	if (!lst1 || !*lst1)
-		return;
-	head = (*lst1)->next;
-	(*lst1)->next = *lst2;
-	 *lst2 = *lst1;
-	 *lst1 = head;
+	int	i;
+
+	i = 0;
+	if (!lst)
+		return (i);
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }
 
-void	pa(t_list **lsta, t_list **lstb)
-{
-	push(lstb, lsta);
-	write(1, "pa\n", 3);
-}
+// void	sort_three(t_list **lst)
+// {
+// 	if (!lst || !*lst || !(*lst)->next)
+// 		return;
+// 	if (lst_size(*lst) == 2)
+// 	{
+// 		if ((*lst)->content > (*lst)->next->content)
+// 			sa(&lst);
+// 		return;
+// 	}
 
-void	pb(t_list **lsta, t_list **lstb)
-{
-	push(lsta, lstb);
-	write(1, "pb\n", 3);
-}
+
+// }
+// void	sort_four(t_list **lst)
+// {
+
+// }
+// void	sort_five(t_list **lst)
+// {
+
+// }
