@@ -6,21 +6,11 @@
 /*   By: yrabhi <yrabhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 21:12:29 by yrabhi            #+#    #+#             */
-/*   Updated: 2025/12/29 14:47:17 by yrabhi           ###   ########.fr       */
+/*   Updated: 2025/12/29 15:12:28 by yrabhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	free_split(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
-}
 
 static void	swap(t_list **lst)
 {

@@ -15,12 +15,13 @@
 static void	push(t_list **lst1, t_list **lst2)
 {
 	t_list	*head;
+
 	if (!lst1 || !*lst1)
-		return;
+		return ;
 	head = (*lst1)->next;
 	(*lst1)->next = *lst2;
-	 *lst2 = *lst1;
-	 *lst1 = head;
+	*lst2 = *lst1;
+	*lst1 = head;
 }
 
 void	pa(t_list **lsta, t_list **lstb)

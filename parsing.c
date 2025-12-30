@@ -6,13 +6,13 @@
 /*   By: yrabhi <yrabhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 13:03:03 by yrabhi            #+#    #+#             */
-/*   Updated: 2025/12/29 14:49:48 by yrabhi           ###   ########.fr       */
+/*   Updated: 2025/12/30 11:46:06 by yrabhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int is_dupl(t_list *stack, int result)
+static int	has_duplicate(t_list *stack, int result)
 {
 	while (stack)
 	{
@@ -38,13 +38,13 @@ static int	is_number(char *str)
 			return (0);
 		i++;
 	}
-	return 1;
+	return (1);
 }
 
 static long	ft_atoi(char *str)
 {
 	long	i;
-	int	sign;
+	int		sign;
 	long	result;
 
 	i = 0;
@@ -61,52 +61,55 @@ static long	ft_atoi(char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result = (result * 10) + (str[i] - '0');
+		if ((sign == 1 && result > 2147483647) || (sign == -1 && result > 2147483648))
+			return 2147483648;
 		i++;
 	}
 	return (result * sign);
 }
 
-void	node_to_lst(t_list **lst, t_list *node)
+void	add_node_back(t_list **lst, t_list *node)
 {
-	t_list *head;
+	t_list	*head;
 
 	head = *lst;
 	if (*lst == NULL)
-		{
-			*lst = node;
-			return;
-		}
+	{
+		*lst = node;
+		return ;
+	}
 	while ((*lst)->next)
-		 *lst = (*lst)->next;
+		*lst = (*lst)->next;
 	(*lst)->next = node;
 	*lst = head;
 }
 
-int	is_validate_input(t_list **stack, int argc, char **argv)
+int	is_valid_input(t_list **stack, int argc, char **argv)
 {
-	int	i;
+	int		i;
 	long	arg;
-	char	**splite_str;
-	int	j;
+	char	**split_str;
+	int		j;
 
 	i = 1;
 	while (i < argc)
 	{
-		splite_str = ft_split(argv[i++], ' ');
+		split_str = ft_split(argv[i++], ' ');
 		j = 0;
-		while(splite_str[j])
+		while (split_str[j])
 		{
-			if (!is_number(splite_str[j]))
-				return (free_split(splite_str), 0);
-			arg = ft_atoi(splite_str[j]);
+			if (!is_number(split_str[j]))
+				return (free_split(split_str), 0);
+			arg = ft_atoi(split_str[j]);
+			//handle atoi case
 			if (arg < -2147483648 || arg > 2147483647)
-				return (free_split(splite_str), 0);
-			if (is_dupl(*stack, arg))
-				return (free_split(splite_str), 0);
-			node_to_lst(stack, new_node(arg));
+				return (free_split(split_str), 0);
+			if (has_duplicate(*stack, arg))
+				return (free_split(split_str), 0);
+			add_node_back(stack, new_node(arg));
 			j++;
 		}
-		free_split(splite_str);
+		free_split(split_str);
 	}
 	return (1);
 }

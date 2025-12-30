@@ -19,12 +19,12 @@ static void	rev_rotate(t_list **lst)
 	t_list	*before_last;
 
 	if (!lst || !*lst || !(*lst)->next)
-		return;
+		return ;
 	tmp = *lst;
 	while ((*lst)->next)
 	{
 		if ((*lst)->next->next == NULL)
-		before_last = *lst;
+			before_last = *lst;
 		*lst = (*lst)->next;
 	}
 	head = *lst;

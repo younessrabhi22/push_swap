@@ -6,7 +6,7 @@
 /*   By: yrabhi <yrabhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 13:48:16 by yrabhi            #+#    #+#             */
-/*   Updated: 2025/12/29 14:25:11 by yrabhi           ###   ########.fr       */
+/*   Updated: 2025/12/30 11:30:12 by yrabhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,22 @@ int	main(int argc, char **argv)
 		ft_error();
 	lsta = NULL;
 	lstb = NULL;
-	for (int i = 1; i <= 4; i++)
-		node_to_lst(&lstb, new_node(i));
-	if (!is_validate_input(&lsta, argc, argv))
+	if (!is_valid_input(&lsta, argc, argv))
 	{
 		free_lst(lsta);
-		free_lst(lstb);
 		ft_error();
 	}
 	print_lst(&lsta, 'a');
-	print_lst(&lstb, 'b');
 	printf("\n");
-	rrr(&lsta, &lstb);
-	printf("\n");
+	if (lst_size(lsta) == 2 || lst_size(lsta) == 3)
+		sort_two_three(&lsta);
+	else if (lst_size(lsta) == 4)
+		sort_four(&lsta, &lstb);
+	else if (lst_size(lsta) == 5)
+		sort_five(&lsta, &lstb);
 	print_lst(&lsta, 'a');
-	print_lst(&lstb, 'b');
+	// else
+	// 	algo
 
 	free_lst(lsta);
 	free_lst(lstb);

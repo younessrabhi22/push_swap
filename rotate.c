@@ -14,11 +14,11 @@
 
 static void	rotate(t_list **lst)
 {
-	t_list *head;
-	t_list *tmp;
+	t_list	*head;
+	t_list	*tmp;
 
 	if (!*lst || !lst || !(*lst)->next)
-		return;
+		return ;
 	head = (*lst)->next;
 	tmp = *lst;
 	while ((*lst)->next)
@@ -32,19 +32,19 @@ static void	rotate(t_list **lst)
 
 void	ra(t_list **lsta)
 {
-		rotate(lsta);
-		write(1, "ra\n", 3);
+	rotate(lsta);
+	write(1, "ra\n", 3);
 }
 
 void	rb(t_list **lstb)
 {
-		rotate(lstb);
-		write(1, "rb\n", 3);
+	rotate(lstb);
+	write(1, "rb\n", 3);
 }
 
 void	rr(t_list **lsta, t_list **lstb)
 {
-		rotate(lsta);
-		rotate(lstb);
-		write(1, "rr\n", 3);
+	rotate(lsta);
+	rotate(lstb);
+	write(1, "rr\n", 3);
 }

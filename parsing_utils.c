@@ -6,102 +6,107 @@
 /*   By: yrabhi <yrabhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 12:58:36 by yrabhi            #+#    #+#             */
-/*   Updated: 2025/12/29 14:50:01 by yrabhi           ###   ########.fr       */
+/*   Updated: 2025/12/29 15:09:47 by yrabhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_error(void)
+static size_t	count_words(char const *s, char c)
 {
-		write(2, "Error\n", 6);
-		exit(1);
- }
+	size_t	i;
+	size_t	words;
 
-void	ft_free(char **result, int index)
-{
-	int	i;
-
-	i = 0;
-	while (i <= index)
-	{
-		free(result[i]);
-		i++;
-	}
-	free(result);
-}
-
-static int	count_words(char *str)
-{
-	int	i;
-	int	words;
-
-	if (!str)
-	return 0;
 	i = 0;
 	words = 0;
-	while (str[i])
+	while (s[i])
 	{
-		if (str[i] != ' ' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
+		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
 			words++;
 		i++;
 	}
-	return words;
+	return (words);
 }
 
-static void	fill_arr(char *str, char **result, char delemiter, int *i, int res_index)
+static void	free_alloc(char **word, size_t j)
 {
-	int	size;
-	int tmp;
-	int	j;
-
-	size = 0;
-	tmp = *i;
-	j = 0;
-	while (str[*i] && (str[*i] != delemiter))
+	while (j > 0)
 	{
-		size++;
-		(*i)++;
+		j--;
+		free(word[j]);
 	}
-	*result = malloc(size + 1);
-	if (!*result)
-	{
-		ft_free(result, res_index);
-		return ;
-	}
-	while (tmp < (*i))
-	{
-		(*result)[j] = str[tmp];
-		j++;
-		tmp++;
-	}
-	(*result)[j] = '\0';
+	free(word);
 }
 
-char	**ft_split(char  *str, char delemiter)
+static int	words_alloc(char **word, char const *s, char c)
 {
-
-	char	**result;
-	int	words;
-	int	i;
-	int	k;
+	size_t	i;
+	size_t	j;
+	size_t	size;
 
 	i = 0;
-	k = 0;
-	words =  count_words(str);
-	if (!str)
-		return NULL;
-	result = malloc((words + 1) * sizeof(char *));
-	if (!result)
-		return (NULL);
-	while (k < words)
+	j = 0;
+	size = 0;
+	while (s[i])
 	{
-		while  (str[i] && (str[i] == delemiter))
-			i++;
-		if (str[i])
-			fill_arr(str, &result[k], delemiter, &i, k);
-		k++;
+		if (s[i] != c)
+			size++;
+		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+		{
+			word[j] = malloc(size + 1);
+			if (!word[j])
+			{
+				free_alloc(word, j);
+				return (0);
+			}
+			j++;
+			size = 0;
+		}
+		i++;
 	}
-	result[k] = NULL;
-	return result;
+	return (1);
+}
+
+static void	fill_arr(char **word, char const *s, char c)
+{
+	size_t	i;
+	size_t	j;
+	size_t	k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	while (s[i])
+	{
+		if (s[i] != c)
+		{
+			word[j][k] = s[i];
+			k++;
+		}
+		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+		{
+			word[j][k] = '\0';
+			j++;
+			k = 0;
+		}
+		i++;
 	}
+	word[j] = NULL;
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**arr;
+	size_t	words;
+
+	if (!s)
+		return (NULL);
+	words = count_words(s, c);
+	arr = malloc((words + 1) * sizeof(char *));
+	if (!arr)
+		return (NULL);
+	if (!words_alloc(arr, s, c))
+		return (NULL);
+	fill_arr(arr, s, c);
+	return (arr);
+}
