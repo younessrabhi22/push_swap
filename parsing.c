@@ -6,13 +6,13 @@
 /*   By: yrabhi <yrabhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 13:03:03 by yrabhi            #+#    #+#             */
-/*   Updated: 2025/12/30 11:46:06 by yrabhi           ###   ########.fr       */
+/*   Updated: 2026/01/02 18:11:08 by yrabhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	has_duplicate(t_list *stack, int result)
+int	has_duplicate(t_list *stack, int result)
 {
 	while (stack)
 	{
@@ -23,7 +23,7 @@ static int	has_duplicate(t_list *stack, int result)
 	return (0);
 }
 
-static int	is_number(char *str)
+int	is_number(char *str)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ static int	is_number(char *str)
 	return (1);
 }
 
-static long	ft_atoi(char *str)
+long	ft_atoi(char *str)
 {
 	long	i;
 	int		sign;
@@ -87,29 +87,35 @@ void	add_node_back(t_list **lst, t_list *node)
 int	is_valid_input(t_list **stack, int argc, char **argv)
 {
 	int		i;
-	long	arg;
+	//long	arg;
 	char	**split_str;
-	int		j;
+	//int		j;
 
 	i = 1;
 	while (i < argc)
 	{
 		split_str = ft_split(argv[i++], ' ');
-		j = 0;
-		while (split_str[j])
+		//j = 0;
+		if (!split_str || !split_str[0])
 		{
-			if (!is_number(split_str[j]))
-				return (free_split(split_str), 0);
-			arg = ft_atoi(split_str[j]);
-			//handle atoi case
-			if (arg < -2147483648 || arg > 2147483647)
-				return (free_split(split_str), 0);
-			if (has_duplicate(*stack, arg))
-				return (free_split(split_str), 0);
-			add_node_back(stack, new_node(arg));
-			j++;
+					free_split(split_str);
+								return 0;
 		}
-		free_split(split_str);
+		if (!check_hlp(split_str, stack))
+			return (0);
+		// while (split_str[j])
+		// {
+		// 	if (!is_number(split_str[j]))
+		// 		return (free_split(split_str), 0);
+		// 	arg = ft_atoi(split_str[j]);
+		// 	if (arg < -2147483648 || arg > 2147483647)
+		// 		return (free_split(split_str), 0);
+		// 	if (has_duplicate(*stack, arg))
+		// 		return (free_split(split_str), 0);
+		// 	add_node_back(stack, new_node(arg));
+		// 	j++;
+		// }
+		// free_split(split_str);
 	}
 	return (1);
 }

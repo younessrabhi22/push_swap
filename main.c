@@ -6,29 +6,29 @@
 /*   By: yrabhi <yrabhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 13:48:16 by yrabhi            #+#    #+#             */
-/*   Updated: 2025/12/30 11:30:12 by yrabhi           ###   ########.fr       */
+/*   Updated: 2026/01/02 18:15:11 by yrabhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	print_lst(t_list **lst, char who)
-{
-	t_list	*head;
+// void	print_lst(t_list **lst, char who)
+// {
+// 	t_list	*head;
 
-	head = *lst;
-	if (who == 'a')
-		printf("stack a : ");
-	else
-		printf("stack b : ");
-	while (*lst)
-	{
-		printf("[%d]", (*lst)->content);
-		*lst = (*lst)->next;
-	}
-	printf("\n");
-	*lst = head;
-}
+// 	head = *lst;
+// 	if (who == 'a')
+// 		printf("stack a : ");
+// 	else
+// 		printf("stack b : ");
+// 	while (*lst)
+// 	{
+// 		printf("[%d]", (*lst)->content);
+// 		*lst = (*lst)->next;
+// 	}
+// 	printf("\n");
+// 	*lst = head;
+// }
 static void	free_lst(t_list *lst)
 {
 	t_list	*tmp;
@@ -68,18 +68,17 @@ int	main(int argc, char **argv)
 		free_lst(lsta);
 		ft_error();
 	}
-	print_lst(&lsta, 'a');
-	printf("\n");
+	// print_lst(&lsta, 'a');
+	// printf("\n");
 	if (lst_size(lsta) == 2 || lst_size(lsta) == 3)
 		sort_two_three(&lsta);
 	else if (lst_size(lsta) == 4)
 		sort_four(&lsta, &lstb);
 	else if (lst_size(lsta) == 5)
 		sort_five(&lsta, &lstb);
-	print_lst(&lsta, 'a');
-	// else
-	// 	algo
-
+	else
+		big_sort(&lsta, &lstb);
+	// print_lst(&lsta, 'a');
 	free_lst(lsta);
 	free_lst(lstb);
 	return (0);
